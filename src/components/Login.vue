@@ -2,23 +2,51 @@
     <div class="text-center">
         <main class="form-signin w-25 m-auto">
             <form @submit.prevent>
-                <img src="../../icon/bmw-2-logo-svg-vector.svg" style="width: 100px;">
-                <h1 class="h3 mb-3 fw-normal">Regist</h1>
-                <Input :type="'email'" :label="'Email address'" v-model="name" />
+                <h1 class="h3 mb-3 fw-normal">Login</h1>
+
+                <ValidationError v-if="ValidationErrors" :  ="ValidationErrors" />
+
+                <Input :type="'email'" :label="'Email address'" v-model="email" />
                 <Input :type="'password'" :label="'Password'" v-model="password" />
-                <Button type="submit">Login</Button>
+                <Button type="submit" @click="onChange" :disabled="isLoading">Login</Button>
             </form>
         </main>
     </div>
 </template>
 <script>
+import { mapState } from "vuex"
+import ValidationError from './ValidationError.vue';
 export default {
     data() {
         return {
-            name: '',
+            email: '',
             password: '',
         }
     },
+    methods: {
+        onChange(e) {
+            e.preventDefault();
+            const data = {
+                email: this.email,
+                password: this.password
+            };
+            this.$store.dispatch("login", data)
+                .then(user => {
+                    this.$router.push({ name: 'home' })
+                    console.log("User", user);
+                })
+                .catch(err => console.log("ERROR", err));
+        },
+    },
+    computed: {
+        ...mapState({
+            isLoading: state => state.auth.isLoading,
+            ValidationErrors: state => state.auth.errors,
+        })
+    },
+    components: {
+        ValidationError
+    }
 }
 </script>
 <style>

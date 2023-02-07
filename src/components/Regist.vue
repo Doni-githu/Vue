@@ -2,10 +2,9 @@
     <div class="text-center">
         <main class="form-signin w-25 m-auto">
             <form>
-                <img src="../../icon/bmw-2-logo-svg-vector.svg" style="width: 100px;">
                 <h1 class="h3 mb-3 fw-normal">Regist</h1>
 
-                <ValidationError />
+                <ValidationError v-if="ValidationErrors" :ValidationErrors="ValidationErrors" />
 
                 <Input :type="'text'" :label="'Name'" v-model="username" />
                 <Input :type="'email'" :label="'Email address'" v-model="email" />
@@ -16,8 +15,8 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 import ValidationError from './ValidationError.vue';
-
 export default {
     data() {
         return {
@@ -35,14 +34,16 @@ export default {
                 password: this.password
             };
             this.$store.dispatch("register", data).then(user => {
+                this.$router.push({ name: 'home' })
                 console.log("User", user);
             }).catch(err => console.log("ERROR", err));
         },
     },
     computed: {
-        isLoading() {
-            return this.$store.state.auth.isLoading;
-        }
+        ...mapState({
+            isLoading: state => state.auth.isLoading,
+            ValidationErrors: state => state.auth.errors,
+        }),
     },
     components: {
         ValidationError
