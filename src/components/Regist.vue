@@ -4,9 +4,9 @@
             <form>
                 <img src="../../icon/bmw-2-logo-svg-vector.svg" style="width: 100px;">
                 <h1 class="h3 mb-3 fw-normal">Regist</h1>
-                <Input :type="'text'" :label="'Name'" />
-                <Input :type="'email'" :label="'Email address'" />
-                <Input :type="'password'" :label="'Password'" />
+                <Input :type="'text'" :label="'Name'" v-model="username" />
+                <Input :type="'email'" :label="'Email address'" v-model="email" />
+                <Input :type="'password'" :label="'Password'" v-model="password" />
                 <Button type="submit" @click="onChange" :disabled="isLoading">Regist</Button>
             </form>
         </main>
@@ -14,10 +14,24 @@
 </template>
 <script>
 export default {
+    data() {
+        return {
+            username: '',
+            email: '',
+            password: ''
+        }
+    },
     methods: {
         onChange(e) {
             e.preventDefault();
-            this.$store.commit('setLoading')
+            const data = {
+                username: this.username,
+                email: this.email,
+                password: this.password
+            }
+            this.$store.dispatch('register', data).then(user => {
+                console.log("User", user)
+            }).catch(err => console.log("ERROR", err))
         },
     },
     computed: {

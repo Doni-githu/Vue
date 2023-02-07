@@ -1,6 +1,7 @@
 <template>
     <div class="form-floating" style="margin-top: 1rem;">
-        <input :type="type" class="form-control" id="floatingInput" :placeholder="label">
+        <input :type="type" class="form-control" id="floatingInput" :value="modelValue" @input="updateInput"
+            :placeholder="label">
         <label for="floatingInput">{{ label }}</label>
     </div>
 </template>
@@ -10,6 +11,12 @@ export default {
     props: {
         type: String,
         label: String,
+        modelValue: [String, Number]
+    },
+    methods: {
+        updateInput(e) {
+            this.$emit('update:modelValue', e.target.value)
+        }
     }
 }
 </script>
