@@ -45,7 +45,7 @@ const actions = {
                 resolve(response.data.user)
             }).catch(err => {
                 context.commit('starFailure', err.response.data)
-                reject(err.response.data)
+                reject(err)
             })
         })
     },

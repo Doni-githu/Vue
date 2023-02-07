@@ -4,7 +4,7 @@
             <form @submit.prevent>
                 <h1 class="h3 mb-3 fw-normal">Login</h1>
 
-                <ValidationError v-if="ValidationErrors" :  ="ValidationErrors" />
+                <ValidationError v-if="ValidationErrors" :ValudetionErrors="ValidationErrors" />
 
                 <Input :type="'email'" :label="'Email address'" v-model="email" />
                 <Input :type="'password'" :label="'Password'" v-model="password" />
@@ -24,8 +24,7 @@ export default {
         }
     },
     methods: {
-        onChange(e) {
-            e.preventDefault();
+        onChange() {
             const data = {
                 email: this.email,
                 password: this.password

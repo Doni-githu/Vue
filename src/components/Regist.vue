@@ -4,7 +4,7 @@
             <form>
                 <h1 class="h3 mb-3 fw-normal">Regist</h1>
 
-                <ValidationError v-if="ValidationErrors" :ValidationErrors="ValidationErrors" />
+                <ValidationError v-if="validationErrors" :ValidationErr="validationErrors" />
 
                 <Input :type="'text'" :label="'Name'" v-model="username" />
                 <Input :type="'email'" :label="'Email address'" v-model="email" />
@@ -36,15 +36,24 @@ export default {
             this.$store.dispatch("register", data).then(user => {
                 this.$router.push({ name: 'home' })
                 console.log("User", user);
-            }).catch(err => console.log("ERROR", err));
+            }).catch(err => {
+                console.log("err", err);
+            });
         },
     },
     computed: {
-        ...mapState({
-            isLoading: state => state.auth.isLoading,
-            ValidationErrors: state => state.auth.errors,
-        }),
+        // ...mapState({
+        //     isLoading: state => state.auth.isLoading,
+        //     validationErrors: state => state.auth.errors, 
+        // }),
+        isLoading(){
+            return this.$store.state.auth.isLoading
+        },
+        validationErrors(){
+            return this.$store.state.auth.errors
+        }
     },
+
     components: {
         ValidationError
     }
