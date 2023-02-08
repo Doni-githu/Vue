@@ -8,9 +8,17 @@ export const getItem = key => {
 
 export const setItem = (key, data) => {
     try {
-        return localStorage.setItem(key,JSON.stringify(data))
+        return localStorage.setItem(key, JSON.stringify(data))
     } catch (error) {
         return null
+    }
+}
+
+export const removeItem = key => {
+    try {
+        return localStorage.removeItem(key)
+    } catch (error) {
+        console.log("Error");
     }
 }
 

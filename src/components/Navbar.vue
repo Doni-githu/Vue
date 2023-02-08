@@ -3,6 +3,7 @@
         <div class="navbar-conteiner">
             <template v-if="isLoggenIn">
                 <RouterLink class="link" :to="{ name: 'home' }">{{ user.username }}</RouterLink>
+                <a href="#" class="link" @click="logout">Logout</a>
             </template>
             <template v-if="isAnonymous">
                 <RouterLink class="link" :to="{ name: 'home' }">Home</RouterLink>
@@ -26,6 +27,9 @@ export default {
     methods: {
         onHomeHandler() {
             return this.$router.push({ name: 'home' })
+        },
+        logout(){
+            return this.$store.dispatch('logout')
         }
     }
 }
@@ -34,15 +38,17 @@ export default {
 nav {
     width: 100%;
     height: 80px;
+    margin-bottom: 1rem;
 }
 
 nav .navbar-conteiner {
-    width: 80%;
+    width: 100%;
     height: 100%;
     margin: 0 auto;
     display: flex;
     gap: 50px;
     justify-content: flex-end;
     align-items: center;
+    border-bottom: 1px solid gray;
 }
 </style>    

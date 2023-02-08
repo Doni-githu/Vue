@@ -1,11 +1,11 @@
 import AuthService from "../service/auth"
-import { setItem } from "../helpers/persisteneStorage"
+import { removeItem, setItem } from "../helpers/persisteneStorage"
 import { gettersTypes } from "./types"
 const store = {
     isLoading: false,
     user: null,
     errors: null,
-    isLoggenIn: null
+    isLoggenIn: false
 }
 
 const getters = {
@@ -15,7 +15,7 @@ const getters = {
     [gettersTypes.isLoggedIn]: state => {
         return Boolean(state.isLoggedIn)
     },
-    [gettersTypes.isAnonymous]: state =>{
+    [gettersTypes.isAnonymous]: state => {
         return state.isLoggedIn === false
     }
 }
@@ -53,6 +53,23 @@ const mutations = {
         state.errors = payload.errors
         state.isLoggenIn = false
     },
+    CurrentUserStart(state) {
+        state.isLoading = true
+    },
+    CurrentUserSuccess(state, payload) {
+        state.isLoading = false
+        state.user = payload
+        state.isLoggedIn = true
+    },
+    CurrentUserFailure(state) {
+        state.isLoading = false
+        state.user = null
+        state.isLoggedIn = false
+    },
+    logout(state) {
+        state.isLoggedIn = false
+        state.user = null
+    }
 }
 
 const actions = {
@@ -82,6 +99,22 @@ const actions = {
                     reject(err.response.data)
                 })
         })
+    },
+    getUser(context) {
+        return new Promise(resolve => {
+            context.commit('CurrentUserStart')
+            AuthService.getUser().then(response => {
+                context.commit('CurrentUserSuccess', response.data.user)
+                resolve(response.data.user)
+            }).catch(e => {
+                console.log(e);
+                context.commit('CurrentUserFailure')
+            })
+        })
+    },
+    logout(context) {
+        context.commit('logout')
+        removeItem('token')
     }
 }
 
