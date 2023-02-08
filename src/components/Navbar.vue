@@ -28,7 +28,7 @@ export default {
         onHomeHandler() {
             return this.$router.push({ name: 'home' })
         },
-        logout(){
+        logout() {
             return this.$store.dispatch('logout')
         }
     }
