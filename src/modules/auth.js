@@ -4,6 +4,7 @@ const store = {
     isLoading: false,
     user: null,
     errors: null,
+    isLoggenIn: null
 }
 
 const mutations = {
@@ -11,27 +12,33 @@ const mutations = {
         state.isLoading = true
         state.user = null
         state.errors = null
+        state.isLoggenIn = null
     },
     starSuccess(state, payload) {
         state.isLoading = false
         state.user = payload
+        state.isLoggenIn = true
     },
     starFailure(state, payload) {
         state.isLoading = false
         state.errors = payload.errors
+        state.isLoggenIn = false
     },
     startLogin(state) {
         state.isLoading = true
         state.user = null
         state.errors = null
+        state.isLoggenIn = null
     },
     loginSuccess(state, payload) {
         state.isLoading = false
         state.user = payload
+        state.isLoggenIn = true
     },
     loginFailure(state, payload) {
         state.isLoading = false
         state.errors = payload.errors
+        state.isLoggenIn = false
     },
 }
 
