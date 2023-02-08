@@ -4,7 +4,7 @@
             <template v-if="isLoggenIn">
                 <RouterLink class="link" :to="{ name: 'home' }">{{ user.username }}</RouterLink>
             </template>
-            <template v-if="!isLoggenIn">
+            <template v-if="isAnonymous">
                 <RouterLink class="link" :to="{ name: 'home' }">Home</RouterLink>
                 <RouterLink class="link" :to="{ name: 'regist' }">Regist</RouterLink>
                 <RouterLink class="link" :to="{ name: 'login' }">Login</RouterLink>
@@ -13,13 +13,15 @@
     </nav>
 </template>
 <script>
-import { mapState } from "vuex"
+import { mapGetters } from "vuex"
+import { gettersTypes } from "../modules/types"
 export default {
     computed: {
-        ...mapState({
-            user: state => state.auth.user,
-            isLoggenIn: state => state.auth.isLoggenIn,
-        })
+        ...mapGetters({
+            user: gettersTypes.user,
+            isLoggenIn: gettersTypes.isLoggedIn,
+            isAnonymous: gettersTypes.isAnonymous
+        }),
     },
     methods: {
         onHomeHandler() {
