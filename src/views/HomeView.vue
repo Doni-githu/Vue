@@ -1,11 +1,14 @@
 <template>
     <div>
-        <h1>Home page</h1>
-        {{ data }}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <Loader v-if="isLoading" class="offset-md-6" />
+            <ArticleCard v-for="article in data" :article="article" :key="article.id" />
+        </div>
     </div>
 </template>
 <script>
 import { mapState } from "vuex"
+import ArticleCard from "../components/ArticleCard.vue"
 export default {
     computed: {
         ...mapState({
@@ -14,7 +17,10 @@ export default {
             error: state => state.articles.error
         })
     },
-    mounted(){
+    components: {
+        ArticleCard
+    },
+    mounted() {
         this.$store.dispatch('articles')
     }
 }

@@ -23,12 +23,15 @@ const mutations = {
 
 const actions = {
     articles(context) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             context.commit('getArticlesStart')
             ArticlesService.articles().then(response => {
                 context.commit("getArticlesSuccess", response.data.articles)
-                console.log(`Response ${response}`);
-            }).catch(() => context.commit('getArticlesFailure'))
+                console.log('Response', response);
+                resolve(response.data.articles)
+            }).catch((e) => {
+                context.commit('getArticlesFailure')
+            })
         })
     },
 }
