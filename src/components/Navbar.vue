@@ -1,12 +1,12 @@
 <template>
     <nav>
         <div class="navbar-conteiner">
+            <RouterLink class="link" :to="{ name: 'home' }">Home</RouterLink>
             <template v-if="isLoggenIn">
                 <RouterLink class="link" :to="{ name: 'home' }">{{ user.username }}</RouterLink>
                 <a href="#" class="link" @click="logout">Logout</a>
             </template>
             <template v-if="isAnonymous">
-                <RouterLink class="link" :to="{ name: 'home' }">Home</RouterLink>
                 <RouterLink class="link" :to="{ name: 'regist' }">Regist</RouterLink>
                 <RouterLink class="link" :to="{ name: 'login' }">Login</RouterLink>
             </template>

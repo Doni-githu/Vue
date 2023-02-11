@@ -3,7 +3,8 @@ import ArticlesService from "../service/articles"
 const state = {
     data: null,
     isLoading: false,
-    error: null
+    error: null,
+    articlesDetail: null,
 }
 
 const mutations = {
@@ -17,6 +18,18 @@ const mutations = {
         state.data = payload
     },
     getArticlesFailure(state) {
+        state.isLoading = false
+    },
+    getArticlesDetailStart(state) {
+        state.isLoading = true
+        state.articlesDetail = null
+        state.error = null
+    },
+    getArticlesDetailSuccess(state, payload) {
+        state.isLoading = false
+        state.articlesDetail = payload
+    },
+    getArticlesDetailFailure(state) {
         state.isLoading = false
     },
 }
@@ -34,6 +47,14 @@ const actions = {
             })
         })
     },
+    articlesDetail(context, slug) {
+        return new Promise((resolve, reject) => {
+            context.commit('getArticlesDetailStart')
+            ArticlesService.articlesDetail(slug)
+                .then(response => { })
+                .catch(() => { })
+        })
+    }
 }
 
 
