@@ -48,10 +48,13 @@ const actions = {
         })
     },
     articlesDetail(context, slug) {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             context.commit('getArticlesDetailStart')
             ArticlesService.articlesDetail(slug)
-                .then(response => { })
+                .then(response => {
+                    context.commit('getArticlesDetailSuccess', response.data.article)
+                    resolve(response.data.article)
+                })
                 .catch(() => { })
         })
     }
