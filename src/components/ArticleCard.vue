@@ -12,7 +12,7 @@
                 <div class="d-flex justify-content-between align-items-center card-footer">
                     <div class="btn-group">
                         <button type="button" @click="ArticleDetailHandler"
-                            class="btn btn-sm btn-outline-secondary">View</button>
+                            class="btn btn-sm btn-outline-secondary">Read article</button>
                     </div>
                     <small class="text-muted">{{ new Date(article.createdAt).toLocaleString('us') }}</small>
                 </div>
