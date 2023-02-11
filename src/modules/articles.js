@@ -18,11 +18,12 @@ const mutations = {
         state.isLoading = false
         state.data = payload
     },
-    getArticlesFailure(state) {
+    Failure(state) {
         state.isLoading = false
     },
     getArticlesDetailStart(state) {
         state.isLoading = true
+        state.data = null
         state.articlesDetail = null
         state.error = null
     },
@@ -40,7 +41,7 @@ const actions = {
                 context.commit("getArticlesSuccess", response.data.articles)
                 console.log('Response', response);
                 resolve(response.data.articles)
-            }).catch((err) => context.commit('getArticlesFailure'))
+            }).catch((err) => context.commit('Failure'))
         })
     },
     articlesDetail(context, slug) {
@@ -51,7 +52,10 @@ const actions = {
                     context.commit('getArticlesDetailSuccess', response.data.article)
                     resolve(response.data.article)
                 })
-                .catch((err) => context.commit(''))
+                .catch((err) => {
+                    alert(err.message)
+                    context.commit('Failure')
+                })
         })
     }
 }

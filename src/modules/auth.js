@@ -95,6 +95,7 @@ const actions = {
                     setItem("token", response.data.user.token)
                     resolve(response.data.user)
                 }).catch(err => {
+
                     context.commit('loginFailure', err.response.data)
                     reject(err.response.data)
                 })
@@ -107,7 +108,6 @@ const actions = {
                 context.commit('CurrentUserSuccess', response.data.user)
                 resolve(response.data.user)
             }).catch(e => {
-                console.log(e);
                 context.commit('CurrentUserFailure')
             })
         })

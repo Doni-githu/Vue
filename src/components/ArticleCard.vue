@@ -14,7 +14,7 @@
                         <button type="button" @click="ArticleDetailHandler"
                             class="btn btn-sm btn-outline-secondary">View</button>
                     </div>
-                    <small class="text-muted">{{ new Date(article.updatedAt).toLocaleString('us') }}</small>
+                    <small class="text-muted">{{ new Date(article.createdAt).toLocaleString('us') }}</small>
                 </div>
             </div>
         </div>

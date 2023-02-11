@@ -1,15 +1,19 @@
 <template>
     <nav>
         <div class="navbar-conteiner">
-            <RouterLink class="link" :to="{ name: 'home' }">Home</RouterLink>
-            <template v-if="isLoggenIn">
-                <RouterLink class="link" :to="{ name: 'home' }">{{ user.username }}</RouterLink>
-                <a href="#" class="link" @click="logout">Logout</a>
-            </template>
-            <template v-if="isAnonymous">
-                <RouterLink class="link" :to="{ name: 'regist' }">Regist</RouterLink>
-                <RouterLink class="link" :to="{ name: 'login' }">Login</RouterLink>
-            </template>
+            <div class="left">
+                <img @click="onHomeHandler" src="../../icon/bmw-2-logo-svg-vector.svg">
+            </div>
+            <div class="right">
+                <template v-if="isLoggenIn">
+                    <a class="link" href="#">{{ user.username }}</a>
+                    <a href="#" class="link" @click="logout">Logout</a>
+                </template>
+                <template v-if="isAnonymous">
+                    <RouterLink class="link" :to="{ name: 'regist' }">Regist</RouterLink>
+                    <RouterLink class="link" :to="{ name: 'login' }">Login</RouterLink>
+                </template>
+            </div>
         </div>
     </nav>
 </template>
@@ -41,14 +45,25 @@ nav {
     margin-bottom: 1rem;
 }
 
-nav .navbar-conteiner {
+.navbar-conteiner {
     width: 100%;
     height: 100%;
-    margin: 0 auto;
+    border-bottom: 1px solid gray;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.right {
     display: flex;
     gap: 50px;
-    justify-content: flex-end;
     align-items: center;
-    border-bottom: 1px solid gray;
+}
+
+.left img {
+    width: 120px;
+    height: 47px;
+    object-fit: contain;
+    object-position: left;
 }
 </style>    
