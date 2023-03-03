@@ -7,7 +7,7 @@
 </template>
 <script>
 export default {
-    name: 'Input',
+    name: 'TextArea',
     props: {
         type: String,
         label: String,
