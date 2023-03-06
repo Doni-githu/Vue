@@ -11,8 +11,12 @@
                 <p class="card-text">{{ article.body.slice(0, 150) }}</p>
                 <div class="d-flex justify-content-between align-items-center card-footer">
                     <div class="btn-group">
-                        <button type="button" @click="ArticleDetailHandler"
-                            class="btn btn-sm btn-outline-secondary">Read article</button>
+                        <button type="button" @click="ArticleDetailHandler" class="btn btn-sm btn-outline-secondary">Read
+                            article</button>
+                        <button v-if="article.author.username == user.username" type="button" @click="DeleteArticle"
+                            class="btn btn-sm btn-outline-danger" :disabled="isLoading">Delete</button>
+                        <button v-if="article.author.username == user.username" type="button" @click="navigatorEdit"
+                            class="btn btn-sm btn-outline-primary" :disabled="isLoading">Edit</button>
                     </div>
                     <small class="text-muted">{{ new Date(article.createdAt).toLocaleString('us') }}</small>
                 </div>
@@ -21,6 +25,7 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
     props: {
         article: {
@@ -28,9 +33,22 @@ export default {
             required: true
         }
     },
+    computed: {
+        ...mapState({
+            user: state => state.auth.user,
+            isLoading: state => state.contol.isLoading
+        })
+    },
     methods: {
         ArticleDetailHandler() {
             return this.$router.push(`/article/${this.article.slug}`)
+        },
+        DeleteArticle() {
+            this.$store.dispatch('deleteAricle', this.article.slug)
+            this.$store.dispatch('articles')
+        },
+        navigatorEdit(){
+           return this.$router.push(`/edit-article/${this.article.slug}`) 
         }
     }
 }
